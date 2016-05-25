@@ -2,7 +2,7 @@
 <html lang="zh-cn">
 <head>
         <meta charset="utf-8" />
-        <title>记录自己的想法</title>
+        <title>I/O</title>
         <link rel="stylesheet" href="/theme/css/main.css" />
 
         <!--[if IE]>
@@ -14,14 +14,19 @@
         <header id="banner" class="body">
                 <h1><a href="/">记录自己的想法 </a></h1>
                 <nav><ul>
-                    <li><a href="/category/misc.html">misc</a></li>
+                    <li class="active"><a href="/category/misc.html">misc</a></li>
                     <li><a href="/category/wen-zhang-lei-bie.html">文章类别</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="/io.html" rel="bookmark"
+           title="Permalink to I/O">I/O</a></h1>
+    </header>
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="/io.html">I/O</a></h1>
+    <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2016-05-25T00:00:00+02:00">
                 Published: 三 25 五月 2016
@@ -32,7 +37,7 @@
         </address>
 <p>In <a href="/category/misc.html">misc</a>.</p>
 
-</footer><!-- /.post-info --><h1>I/O</h1>
+</footer><!-- /.post-info -->      <h1>I/O</h1>
 <p>缓存I/O也被称为标准I/O，大多数文件系统的默认I/O是缓存I/O。在Linux缓存I/O机制中，将I/O数据缓存在文件系统中的页缓存（page cache）中，即数据先拷贝到Linux内核缓冲区中，然后才从Linux内核缓冲区拷贝到应用程序的地址空间。</p>
 <h2>缓存I/O的优点</h2>
 <p>缓存I/O使用了Linux内核缓冲区，在一定程度上分离了应用程序空间和实际的物理设备。
@@ -49,36 +54,11 @@
 <p>设置直接I/O的开销很大，直接不能提供缓存I/O的优势。直接I/O读数据会造成磁盘的同步读，带来性能的下降，进程较长时间才能执行完。写数据，直接I/O 需要调用 write() 系统调用同步执行，否则应用程序会不知道什么时侯才可以使用缓冲I/O。直接I/O也会导致应用程序关闭缓慢。</p>
 <p>所以应用程序使用直接I/O进行数据传输时侯通常会使用异步I/O结合使用</p>
 <h2>网络I/O</h2>
-<p>不太明白  待解决</p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+<p>不太明白  待解决</p>
+    </div><!-- /.entry-content -->
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/wen-zhang-biao-ti.html" rel="bookmark"
-                           title="Permalink to 文章标题">文章标题</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2016-05-25T00:00:00+02:00">
-                Published: 三 25 五月 2016
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/luojiyin.html">luojiyin</a>
-        </address>
-<p>In <a href="/category/wen-zhang-lei-bie.html">文章类别</a>.</p>
-
-</footer><!-- /.post-info -->                <p>这是内容</p>
-                <a class="readmore" href="/wen-zhang-biao-ti.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
-                </section><!-- /#content -->
+  </article>
+</section>
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>blogroll</h2>
