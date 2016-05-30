@@ -1,38 +1,64 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
-        <meta charset="utf-8" />
-        <title>记录自己的想法 - misc</title>
-        <link rel="stylesheet" href="/theme/css/main.css" />
 
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
+        <title>记录自己的想法</title>
+        <meta charset="utf-8" />
+
+
+        <!-- Mobile viewport optimized: j.mp/bplateviewport -->
+        <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1">
+
+        <link rel="stylesheet" type="text/css" href="/theme/gumby.css" />
+        <link rel="stylesheet" type="text/css" href="/theme/style.css" />
+        <link rel="stylesheet" type="text/css" href="/theme/pygment.css" />
+
+        <script src="/theme/js/libs/modernizr-2.6.2.min.js"></script>
+
+
+
+
 </head>
 
 <body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="/">记录自己的想法 </a></h1>
-                <nav><ul>
-                    <li class="active"><a href="/category/misc.html">misc</a></li>
-                    <li><a href="/category/wen-zhang-lei-bie.html">文章类别</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="/sendfileti-gao-wang-luo-xing-neng.html">sendfile()提高网络性能</a></h1>
-<footer class="post-info">
-        <abbr class="published" title="2016-05-26T00:00:00+02:00">
-                Published: 四 26 五月 2016
-        </abbr>
 
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/luojiyin.html">luojiyin</a>
-        </address>
-<p>In <a href="/category/misc.html">misc</a>.</p>
+    <div class="container">
 
-</footer><!-- /.post-info --><p>我们平时通过网络发送文件时会用到的两个系统调用：
+        <div class="row">
+
+          <header id="banner" class="body">
+                  <h1><a href="/">记录自己的想法 <strong></strong></a></h1>
+          </header><!-- /#banner -->
+
+            <div id="navigation" class="navbar row">
+              <a href="#" gumby-trigger="#navigation &gt; ul" class="toggle"><i class="icon-menu"></i></a>
+             
+              <ul class="columns">
+                <li><a href="/">Home</a></li>
+
+
+              </ul>
+            </div>
+
+<section id="content">
+<h2>Articles in the misc category</h2>
+
+
+   <div class="row">
+
+
+        <div class="eleven columns">
+                 <ol id="post-list">
+                        <li><article class="hentry">
+                                <header> <h2 class="entry-title"><a href="/sendfileti-gao-wang-luo-xing-neng.html" rel="bookmark" title="Permalink to sendfile()提高网络性能">sendfile()提高网络性能</a></h2> </header>
+                                <footer class="post-info">
+                                    <abbr class="published" title="2016-05-26T00:00:00+02:00"> 四 26 五月 2016 </abbr>
+                                    <address class="vcard author">By 
+                                    <a class="url fn" href="/author/luojiyin.html"> luojiyin</a>
+                                    </address>
+                                </footer><!-- /.post-info -->
+                                <div class="entry-content"> <p>我们平时通过网络发送文件时会用到的两个系统调用：
 read(file, tmp_buf, len)
 write(socket, tmp_buf, len)
 过程如下
@@ -59,44 +85,27 @@ write(socket, tmp_buf, len)
 <p>在Linux 2.1引进了sendfile()， 示意图</p>
 <p><img alt="" src="http://o7q7atccj.bkt.clouddn.com/6345f2.jpg" /></p>
 <ol>
-<li>调用sendfile() 时会直接在内核空间把文件读取到内核的文件缓冲区  然后内核的文件缓冲区的数据复制到内核的socket缓冲区  （避免原来调用write() 带来潜在问题）</li>
-<li>将内核的socket缓冲区复制到网络协议引擎
-避免了内核空间  用户空间的切换，   但还是做了3次拷贝</li>
-</ol>
-<p>Linux 2.4  改进了sendfile() 示意图</p>
-<p><img alt="" src="http://o7q7atccj.bkt.clouddn.com/6345f4.jpg" /></p>
-<ol>
-<li>调用sendfild() 把数据直接拷贝到内核缓冲区（通过DMA）</li>
-<li>没有数据拷贝到内核socket缓冲区，改为 告诉socket 缓冲区要发送数据在内核缓冲区的位置和长度。内核缓冲区的数据通过DMA直接复制到协议引擎，这是最后一次拷贝。</li>
-</ol>
-<p>因为数据还是从磁盘到内存，从内存到写。有人可能认为不是真正的 零拷贝。从操作系统来讲是 零拷贝。因为数据没从内核缓冲区<font color=#FF00FF>间</font>拷贝</p>
-<p>现在很多http server 都加入了 sendfile机制的调用， 如 nginx   lighttpd。
-本文半翻译半加入自己的想法   你阅读时要保持清醒。
-<a href="http://www.linuxjournal.com/article/6345?page=0,0">原文地址 原标题 Zero Copy I: User-Mode Perspective</a></p>                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
+<li>调用sendfile() 时会直接在内核空间把文件读取到内核的文件缓冲区  然后内核的文件缓冲区的数据复制到内核的socket缓冲区 ...</li></ol> </div><!-- /.entry-content -->
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="/io.html" rel="bookmark"
-                           title="Permalink to I/O">I/O</a></h1>
-                </header>
+                                <div class="medium primary btn"><a href="/sendfileti-gao-wang-luo-xing-neng.html" rel="bookmark" title="Permalink to sendfile()提高网络性能">Read more <i class="icon-arrow-right"></i></a></div>
 
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2016-05-25T00:00:00+02:00">
-                Published: 三 25 五月 2016
-        </abbr>
 
-        <address class="vcard author">
-                By                         <a class="url fn" href="/author/luojiyin.html">luojiyin</a>
-        </address>
-<p>In <a href="/category/misc.html">misc</a>.</p>
 
-</footer><!-- /.post-info -->                <h1>I/O</h1>
+                                <div class="row tag-row">
+                                </div>
+
+
+
+                        </article></li>
+                        <li><article class="hentry">
+                                <header> <h2 class="entry-title"><a href="/io.html" rel="bookmark" title="Permalink to I/O">I/O</a></h2> </header>
+                                <footer class="post-info">
+                                    <abbr class="published" title="2016-05-25T00:00:00+02:00"> 三 25 五月 2016 </abbr>
+                                    <address class="vcard author">By 
+                                    <a class="url fn" href="/author/luojiyin.html"> luojiyin</a>
+                                    </address>
+                                </footer><!-- /.post-info -->
+                                <div class="entry-content"> <h1>I/O</h1>
 <p>缓存I/O也被称为标准I/O，大多数文件系统的默认I/O是缓存I/O。在Linux缓存I/O机制中，将I/O数据缓存在文件系统中的页缓存（page cache）中，即数据先拷贝到Linux内核缓冲区中，然后才从Linux内核缓冲区拷贝到应用程序的地址空间。</p>
 <h2>缓存I/O的优点</h2>
 <p>缓存I/O使用了Linux内核缓冲区，在一定程度上分离了应用程序空间和实际的物理设备。
@@ -104,39 +113,100 @@ write(socket, tmp_buf, len)
 <h2>不同的写入方式</h2>
 <p>如果用户使用同步写（synchronous writes）,数据将立刻写到磁盘上，应用程序会等到数据写完。
 如果是延迟写（deferred writes）,应用程序就不需要等到数据完全写到磁盘，只要数据写入到缓存中，在延迟写下， Linux会定期将页缓存（page cache）的数据写到磁盘上。
-与异步写（asynchronous writes） 不同的是，延迟写机制在数据完全写到磁盘上时不会通知应用程序，异步写机制会在数据完全写到磁盘上通知应用程序。延迟写存在数据丢失的风险（拔出U盘时侯，一定要通知系统，不要直接拔 ...</p>
-                <a class="readmore" href="/io.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
+与异步写（asynchronous writes） 不同的是，延迟写机制在数据完全写到磁盘上时不会通知应用程序，异步写机制会在数据完全写到磁盘上通知应用程序。延迟写存在数据丢失的风险（拔出U盘时侯，一定要通知系统，不要直接拔 ...</p> </div><!-- /.entry-content -->
+
+                                <div class="medium primary btn"><a href="/io.html" rel="bookmark" title="Permalink to I/O">Read more <i class="icon-arrow-right"></i></a></div>
+
+
+
+                                <div class="row tag-row">
+                                </div>
+
+
+
+                        </article></li>
                 </ol><!-- /#posts-list -->
-                </section><!-- /#content -->
-        <section id="extras" class="body">
-                <div class="blogroll">
-                        <h2>blogroll</h2>
-                        <ul>
-                            <li><a href="http://getpelican.com/">Pelican</a></li>
-                            <li><a href="http://python.org/">Python.org</a></li>
-                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
-                            <li><a href="#">You can modify those links in your config file</a></li>
-                        </ul>
-                </div><!-- /.blogroll -->
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
 
-                            <li><a href="#">You can add links in your config file</a></li>
-                            <li><a href="#">Another social link</a></li>
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
+        </div><!-- /.eleven.columns -->
+        
+<div class="three columns">
 
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
+<h4>Pages</h4>
 
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
+ <ul>
+  </ul>
 
+<h4>Categories</h4>
+<ul class="blank">
+		<li><a href="/category/misc.html">misc</a></li>
+		<li><a href="/category/wen-zhang-lei-bie.html">文章类别</a></li>
+</ul>
+
+
+<h4>Tags</h4>
+
+
+<nav class="widget">
+  <h4>Social</h4>
+  <ul class="blank">
+    <li><a href="#">You can add links in your config file</a></li>
+    <li><a href="#">Another social link</a></li>
+  </ul>
+</nav>
+
+</div> </div><!-- /.row -->
+
+<p class="paginator">
+    Page 1 / 1
+</p>
+</section><!-- /#content -->
+
+       </div><!-- /.row -->
+    </div><!-- /.container -->
+
+
+       <div class="container.nopad bg">
+
+    
+        <footer id="credits" class="row">
+          <div class="seven columns left-center">
+
+                   <address id="about" class="vcard body">
+                    Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
+                    which takes great advantage of <a href="http://python.org">Python</a>.
+                    <br />
+                    Based on the <a target="_blank" href="http://gumbyframework.com">Gumby Framework</a>
+                    </address>
+          </div>
+
+
+          <div class="seven columns">
+            <div class="row">
+              <ul class="socbtns">
+
+
+
+
+
+              </ul>
+            </div>
+          </div>
+        </footer>
+
+    </div>
+
+
+<script type="text/javascript">
+    var disqus_shortname = 'luojiyin1987';
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+  <script src="/theme/js/libs/jquery-1.9.1.min.js"></script>
+  <script src="/theme/js/libs/gumby.min.js"></script>
+  <script src="/theme/js/plugins.js"></script>
 </body>
 </html>
