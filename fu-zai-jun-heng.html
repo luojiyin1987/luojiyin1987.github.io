@@ -2,7 +2,7 @@
 <html lang="zh-cn">
 <head>
 
-        <title>文章标题</title>
+        <title>负载均衡</title>
         <meta charset="utf-8" />
 
 
@@ -49,26 +49,50 @@
 
             <header>
               <h2 class="entry-title">
-                <a href="/wen-zhang-biao-ti.html" rel="bookmark"
-                   title="Permalink to 文章标题">文章标题</a></h2>
+                <a href="/fu-zai-jun-heng.html" rel="bookmark"
+                   title="Permalink to 负载均衡">负载均衡</a></h2>
            
             </header>
             <footer class="post-info">
-              <abbr class="published" title="2016-05-25T00:00:00+02:00">
-                三 25 五月 2016
+              <abbr class="published" title="2016-05-31T00:00:00+02:00">
+                二 31 五月 2016
               </abbr>
               <address class="vcard author">By 
                 <a class="url fn" href="/author/luojiyin.html"> luojiyin</a>
               </address>
             </footer><!-- /.post-info -->
             <div class="entry-content">
-              <p>这是内容</p>
+              <p>Tag：Nginx， LVS， HAProxy</p>
+<p>最近做了 Nginx+ Redis +Tomcat的集群，Nginx通过IP_hash模式实现复制均衡（比较简单粗暴，固定服务器处理，减少上下文切换，提高缓存利用。什么时侯可以实现优先找负载最轻的机器？？？）。Redis存储Tomcat的session， 实现会话共享。在51Reboot模拟面试时，虐一遍，只感慨自己在想的方面太懒惰了。</p>
+<h2>为什么选择Nginx？</h2>
+<p>LVS Nginx HAProxy 都解决了C10K问题，公司网站并发最高也就1K多，性能不是问题。
+1. Nginx作用在OSI第七层，可以针对http/https应用上做一些分流策略，如域名，目录结构，正则支持最全面，加上丰富的第三方插件，可以实现复杂的负载均衡任务。特别是openresty，可以使用Lua对Nginx核心以及现在各种Nginx C模块进行脚本编程，用于灵活的Web应用网关和Web应用防火墙。提高运维的灵活性和高可用性，对我本身就有很高学习价值（私心）。
+2. Nginx也是性能强大的Web应用服务器。 我在Nginx的机器上放置静态页面，展示公司产品，进行动静分离。
+3. Nginx Web反向代理（Web的负载均衡）的缓存越来越好。
+4. Nginx 通过第三方模块支持TCP负载均衡，性能会高于HTTP负载均衡，想以后尝试MySQL，Redis的负载均衡。不过Nginx工作在用户态，LVS是内核态，肯定比不过，但不会太差。
+5. Nginx 对请求的异步处理，减轻节点服务器的压力。
+6. 当时找到Nignx的资料是最全面的，社区很活跃。30分钟就让集群跑起来（还没做session共享。当时还遇到因为SELinux，Nginx端口转发被禁止，系统为CentOS6.7 64bit），有更多时间去解决业务上的需求。</p>
+<h2>从技术层面上对比 LVS Nginx HAProxy</h2>
+<ol>
+<li>
+<p>作用于网络层和负载均衡策略的差异。 LVS集成在内核，工作在OSI第四层，仅做分发之用，没有流量产生，它在负载均衡软件中是性能最强，对内存和CPU消耗较低。作用第四层，它可以对TCP层应用做负载均衡。不支持正则，不能做动静分离。LVS的三种工作模型原理和10种调度算法，需要网络通讯的方面的知识储备。感觉要进行比较复杂的调试。
+还要一个VIP，当时公网IP不多。当时就放弃尝试LVS。个人感觉网站规模大时，可以考虑LVS与智能DNS结合，做最前面的负载均衡。Nginx或HAProxy做二级负载均衡。</p>
+</li>
+<li>
+<p>LVS可以检测到后端服务器的状态，但是LVS原理使请求不能重发请求，当用户上传文件，如果节点出现问题，将要重传。Nginx 可以把上传切到别的服务器上。</p>
+</li>
+<li>
+<p>HAProxy 也是支持虚拟主机。HAProxy对Session的保持，Cookie的引导的优势，在 Nginx + Redis + Tomcat的结构下，不明显。HAProxy的负载均衡策略比Nginx多，单从负载均衡器的角度比Nginx好。Nginx Plus(商用收费)才跟 HAProxy一样，支持Out Of Band 后端服务器健康检测，更早发现问题。Nginx在后端服务器返回500错误，才知道挂了。当然可以通过ngx_http_healthcheck_module 第三方模块加强。</p>
+</li>
+</ol>
+<p>参考资料<br />
+<img alt="Which software load balancer is better: HAProxy or nginx?Which software load balancer is better: HAProxy or nginx?" src="https://www.quora.com/Which-software-load-balancer-is-better-HAProxy-or-nginx" /></p>
             </div><!-- /.entry-content -->
             <div class="comments">
               <h3>Comments</h3>
               <div id="disqus_thread"></div>
               <script type="text/javascript">
-                var disqus_identifier = "wen-zhang-biao-ti.html";
+                var disqus_identifier = "fu-zai-jun-heng.html";
                 (function() {
                 var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
                 dsq.src = 'https://httpluojiyin1987githubio.disqus.com/embed.js';
