@@ -97,34 +97,6 @@ write(socket, tmp_buf, len)
 
 
                         </article></li>
-                        <li><article class="hentry">
-                                <header> <h2 class="entry-title"><a href="/io.html" rel="bookmark" title="Permalink to I/O">I/O</a></h2> </header>
-                                <footer class="post-info">
-                                    <abbr class="published" title="2016-05-25T00:00:00+02:00"> 三 25 五月 2016 </abbr>
-                                    <address class="vcard author">By 
-                                    <a class="url fn" href="/author/luojiyin.html"> luojiyin</a>
-                                    </address>
-                                </footer><!-- /.post-info -->
-                                <div class="entry-content"> <h1>I/O</h1>
-<p>缓存I/O也被称为标准I/O，大多数文件系统的默认I/O是缓存I/O。在Linux缓存I/O机制中，将I/O数据缓存在文件系统中的页缓存（page cache）中，即数据先拷贝到Linux内核缓冲区中，然后才从Linux内核缓冲区拷贝到应用程序的地址空间。</p>
-<h2>缓存I/O的优点</h2>
-<p>缓存I/O使用了Linux内核缓冲区，在一定程度上分离了应用程序空间和实际的物理设备。
-减少了读盘次数，提高性能。</p>
-<h2>不同的写入方式</h2>
-<p>如果用户使用同步写（synchronous writes）,数据将立刻写到磁盘上，应用程序会等到数据写完。
-如果是延迟写（deferred writes）,应用程序就不需要等到数据完全写到磁盘，只要数据写入到缓存中，在延迟写下， Linux会定期将页缓存（page cache）的数据写到磁盘上。
-与异步写（asynchronous writes） 不同的是，延迟写机制在数据完全写到磁盘上时不会通知应用程序，异步写机制会在数据完全写到磁盘上通知应用程序。延迟写存在数据丢失的风险（拔出U盘时侯，一定要通知系统，不要直接拔 ...</p> </div><!-- /.entry-content -->
-
-                                <div class="medium primary btn"><a href="/io.html" rel="bookmark" title="Permalink to I/O">Read more <i class="icon-arrow-right"></i></a></div>
-
-
-
-                                <div class="row tag-row">
-                                </div>
-
-
-
-                        </article></li>
                 </ol><!-- /#posts-list -->
 
         </div><!-- /.eleven.columns -->
@@ -139,6 +111,7 @@ write(socket, tmp_buf, len)
 <h4>Categories</h4>
 <ul class="blank">
 		<li><a href="/category/fu-zai-jun-heng.html">负载均衡</a></li>
+		<li><a href="/category/io.html">I/O</a></li>
 		<li><a href="/category/misc.html">misc</a></li>
 		<li><a href="/category/wen-zhang-lei-bie.html">文章类别</a></li>
 </ul>
