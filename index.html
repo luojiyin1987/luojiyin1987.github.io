@@ -51,6 +51,38 @@
         <div class="eleven columns">
                  <ol id="post-list">
                         <li><article class="hentry">
+                                <header> <h2 class="entry-title"><a href="/luan-xiang-ntp.html" rel="bookmark" title="Permalink to 乱想 NTP">乱想 NTP</a></h2> </header>
+                                <footer class="post-info">
+                                    <abbr class="published" title="2016-06-04T00:00:00+02:00"> 六 04 六月 2016 </abbr>
+                                    <address class="vcard author">By 
+                                    <a class="url fn" href="/author/luojiyin.html"> luojiyin</a>
+                                    </address>
+                                </footer><!-- /.post-info -->
+                                <div class="entry-content"> <h1>关于NTP 工作流程</h1>
+<p>先看维基的资料
+<img alt="" src="http://o7q7atccj.bkt.clouddn.com/2016-06-04%2012:19:04%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png" /></p>
+<p>请求数据包从客户端出发带客户端时间戳 t0, 经过网络传输，有传输时间，到达NTP后盖上NTP的时间戳t1,数据包没有马上返回客户端，在发向客户端时，带上服务器时间戳t2,到达客户端上盖上时间戳t3.</p>
+<p>整个过程的时延， 看图是很容易理解的。关键是 offset 的计算？ 有点难理解</p>
+<p>先简化问题 ，假设来回时间的延时是相同的。
+1. t1 -t0 的值 是客户端与服务端的时间差  加上 客户端到服务器的延时
+2. t2 -t3 的值 是客户端与服务端的时间差  减去 服务器到客户端的延时
+3. 为什么除2就很容易理解了。</p>
+<p>但网络数据是不稳定的。那就统计学进行处理<a href="https://www.eecis.udel.edu/~mills/ntp/html/warp.html">网页  How NTP Works </a></p>
+<p>里面提到了<a href="https://www.eecis.udel.edu/~mills/ntp/html/filter.html">Clock Filter Algorithm</a> 和<a href="https://www.eecis.udel.edu/~mills/ntp/html/select.html">Clock Select Algorithm ...</a></p> </div><!-- /.entry-content -->
+
+                                <div class="medium primary btn"><a href="/luan-xiang-ntp.html" rel="bookmark" title="Permalink to 乱想 NTP">Read more <i class="icon-arrow-right"></i></a></div>
+
+
+
+                                <div class="row tag-row">
+                                        <span>Tagged as : </span>
+                                            <a class="danger label" href="/tag/ntp.html">NTP</a>
+                                </div>
+
+
+
+                        </article></li>
+                        <li><article class="hentry">
                                 <header> <h2 class="entry-title"><a href="/lvs-nginx-haproxy-dui-bi.html" rel="bookmark" title="Permalink to LVS Nginx HAProxy 对比">LVS Nginx HAProxy 对比</a></h2> </header>
                                 <footer class="post-info">
                                     <abbr class="published" title="2016-05-31T00:00:00+02:00"> 二 31 五月 2016 </abbr>
@@ -190,11 +222,14 @@ write(socket, tmp_buf, len)
 <ul class="blank">
 		<li><a href="/category/fu-zai-jun-heng.html">负载均衡</a></li>
 		<li><a href="/category/io.html">I/O</a></li>
+		<li><a href="/category/ntp.html">NTP</a></li>
 		<li><a href="/category/wen-zhang-lei-bie.html">文章类别</a></li>
 </ul>
 
 
 <h4>Tags</h4>
+	<ul class="blank">
+</ul>
 
 
 <nav class="widget">
