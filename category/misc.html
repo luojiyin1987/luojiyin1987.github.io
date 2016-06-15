@@ -51,43 +51,18 @@
         <div class="eleven columns">
                  <ol id="post-list">
                         <li><article class="hentry">
-                                <header> <h2 class="entry-title"><a href="/sendfileti-gao-wang-luo-xing-neng.html" rel="bookmark" title="Permalink to sendfile()提高网络性能">sendfile()提高网络性能</a></h2> </header>
+                                <header> <h2 class="entry-title"><a href="/kai-shi-ken-tcpipxiang-jie-juan-yi-xie-yi.html" rel="bookmark" title="Permalink to 开始啃 TCP/IP详解 卷一：协议">开始啃 TCP/IP详解 卷一：协议</a></h2> </header>
                                 <footer class="post-info">
-                                    <abbr class="published" title="2016-05-26T00:00:00+02:00"> 四 26 五月 2016 </abbr>
+                                    <abbr class="published" title="2015-06-15T00:00:00+02:00"> 一 15 六月 2015 </abbr>
                                     <address class="vcard author">By 
                                     <a class="url fn" href="/author/luojiyin.html"> luojiyin</a>
                                     </address>
                                 </footer><!-- /.post-info -->
-                                <div class="entry-content"> <p>我们平时通过网络发送文件时会用到的两个系统调用：
-read(file, tmp_buf, len)
-write(socket, tmp_buf, len)
-过程如下
-<img alt="" src="http://o7q7atccj.bkt.clouddn.com/6345f1.jpg" /></p>
-<p>在用户空间调用read()读取文件时发生两次内存拷贝：</p>
-<ol>
-<li>DMA将文件读取到内核的文件缓冲区</li>
-<li>调用返回用户空间将内核的文件缓冲区的数据复制到用户空间的缓冲区</li>
-</ol>
-<p>接着调用write（） 把数据写入到socket时，又发生了两次内存拷贝：</p>
-<ol>
-<li>将用户空间的缓冲区的数据复制到内核的socketh缓冲区</li>
-<li>将内核socket缓冲区的数据复制到网络协议引擎</li>
-</ol>
-<p>在整个文件发送中，发生了四次内存拷贝和内核态用户态的上下文切换，但是数据根本没发生变化。可以全在内核解决吗？？？</p>
-<p>考虑到使用mmap()，调用过程示意图</p>
-<p><img alt="" src="http://o7q7atccj.bkt.clouddn.com/6345f2.jpg" /></p>
-<ol>
-<li>调用mmap()时会将文件直接读取到内核缓冲区，并把内核缓冲区直接共享到用户空间（发生了两次内存拷贝  一次内核空间到用户空间的切换）</li>
-<li>调用write()， 直接将内核缓冲区的数据复制到内核socket缓存区</li>
-<li>通过DMA把内核socket缓冲区到协议引擎（protocol engine），第三次内存拷贝</li>
-</ol>
-<p>减少了用户态和内核态的内存拷贝，避免了上下文切换，但是当进程调用 write() ,另一个进程把文件清空了，程序会报SIGBUS 类似错误。</p>
-<p>在Linux 2.1引进了sendfile()， 示意图</p>
-<p><img alt="" src="http://o7q7atccj.bkt.clouddn.com/6345f2.jpg" /></p>
-<ol>
-<li>调用sendfile() 时会直接在内核空间把文件读取到内核的文件缓冲区  然后内核的文件缓冲区的数据复制到内核的socket缓冲区 ...</li></ol> </div><!-- /.entry-content -->
+                                <div class="entry-content"> <p>Category： 读书
+Tag: 读书，网络</p>
+<p>给自己立个里程碑，多年后看长进</p> </div><!-- /.entry-content -->
 
-                                <div class="medium primary btn"><a href="/sendfileti-gao-wang-luo-xing-neng.html" rel="bookmark" title="Permalink to sendfile()提高网络性能">Read more <i class="icon-arrow-right"></i></a></div>
+                                <div class="medium primary btn"><a href="/kai-shi-ken-tcpipxiang-jie-juan-yi-xie-yi.html" rel="bookmark" title="Permalink to 开始啃 TCP/IP详解 卷一：协议">Read more <i class="icon-arrow-right"></i></a></div>
 
 
 
@@ -113,11 +88,14 @@ write(socket, tmp_buf, len)
 		<li><a href="/category/fu-zai-jun-heng.html">负载均衡</a></li>
 		<li><a href="/category/io.html">I/O</a></li>
 		<li><a href="/category/misc.html">misc</a></li>
+		<li><a href="/category/ntp.html">NTP</a></li>
 		<li><a href="/category/wen-zhang-lei-bie.html">文章类别</a></li>
 </ul>
 
 
 <h4>Tags</h4>
+	<ul class="blank">
+</ul>
 
 
 <nav class="widget">
