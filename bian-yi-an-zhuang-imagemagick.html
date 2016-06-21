@@ -2,7 +2,7 @@
 <html lang="zh-cn">
 <head>
 
-        <title>LVS Nginx HAProxy 对比</title>
+        <title>编译安装ImageMagick</title>
         <meta charset="utf-8" />
 
 
@@ -49,61 +49,61 @@
 
             <header>
               <h2 class="entry-title">
-                <a href="/lvs-nginx-haproxy-dui-bi.html" rel="bookmark"
-                   title="Permalink to LVS Nginx HAProxy 对比">LVS Nginx HAProxy 对比</a></h2>
+                <a href="/bian-yi-an-zhuang-imagemagick.html" rel="bookmark"
+                   title="Permalink to 编译安装ImageMagick">编译安装ImageMagick</a></h2>
            
             </header>
             <footer class="post-info">
-              <abbr class="published" title="2016-05-31T00:00:00+02:00">
-                二 31 五月 2016
+              <abbr class="published" title="2016-06-21T00:00:00+02:00">
+                二 21 六月 2016
               </abbr>
               <address class="vcard author">By 
                 <a class="url fn" href="/author/luojiyin.html"> luojiyin</a>
               </address>
             </footer><!-- /.post-info -->
             <div class="entry-content">
-              <p>最近做了 Nginx+ Redis +Tomcat的集群，Nginx通过IP_hash模式实现复制均衡（比较简单粗暴，固定服务器处理，减少上下文切换，提高缓存利用。什么时侯可以实现优先找负载最轻的机器？？？）。Redis存储Tomcat的session， 实现会话共享。在51Reboot模拟面试时，被雪糕虐一遍，只感慨自己在想的方面太懒惰了。</p>
-<h2>为什么选择Nginx？</h2>
-<p>LVS Nginx HAProxy 都解决了C10K问题，公司网站并发最高也就1K多，性能不是问题。
-1. Nginx作用在OSI第七层，可以针对http/https应用上做一些分流策略，如域名，目录结构，正则支持最全面，加上丰富的第三方插件，可以实现复杂的负载均衡任务。特别是openresty，可以使用Lua对Nginx核心以及现在各种Nginx C模块进行脚本编程，用于灵活的Web应用网关和Web应用防火墙。提高运维的灵活性和高可用性，对我本身就有很高学习价值（私心）。</p>
-<ol>
-<li>
-<p>Nginx也是性能强大的Web应用服务器。 我在Nginx的机器上放置静态页面，展示公司产品，进行动静分离。</p>
-</li>
-<li>
-<p>Nginx Web反向代理（Web的负载均衡）的缓存越来越好。</p>
-</li>
-<li>
-<p>Nginx 通过第三方模块支持TCP负载均衡，性能会高于HTTP负载均衡，想以后尝试MySQL，Redis的负载均衡。不过Nginx工作在用户态，LVS是内核态，肯定比不过，但不会太差。</p>
-</li>
-<li>
-<p>Nginx 对请求的异步处理，减轻节点服务器的压力。</p>
-</li>
-<li>
-<p>当时找到Nignx的资料是最全面的，社区很活跃。30分钟就让集群跑起来（还没做session共享。当时还遇到因为SELinux，Nginx端口转发被禁止，系统为CentOS6.7 64bit），有更多时间去解决业务上的需求。</p>
-</li>
-</ol>
-<h2>从技术层面上对比 LVS Nginx HAProxy</h2>
-<ol>
-<li>
-<p>作用于网络层和负载均衡策略的差异。 LVS集成在内核，工作在OSI第四层，仅做分发之用，没有流量产生，它在负载均衡软件中是性能最强，对内存和CPU消耗较低。作用第四层，它可以对TCP层应用做负载均衡。不支持正则，不能做动静分离。LVS的三种工作模型原理和10种调度算法，需要网络通讯的方面的知识储备。感觉要进行比较复杂的调试。
-还要一个VIP，当时公网IP不多。当时就放弃尝试LVS。个人感觉网站规模大时，可以考虑LVS与智能DNS结合，做最前面的负载均衡。Nginx或HAProxy做二级负载均衡。</p>
-</li>
-<li>
-<p>LVS可以检测到后端服务器的状态，但是LVS原理使请求不能重发请求，当用户上传文件，如果节点出现问题，将要重传。Nginx 可以把上传切到别的服务器上。</p>
-</li>
-<li>
-<p>HAProxy 也是支持虚拟主机。HAProxy对Session的保持，Cookie的引导的优势，在 Nginx + Redis + Tomcat的结构下，不明显。HAProxy的负载均衡策略比Nginx多，单从负载均衡器的角度比Nginx好。Nginx Plus(商用收费)才跟 HAProxy一样，支持Out Of Band 后端服务器健康检测，更早发现问题。Nginx在后端服务器返回500错误，才知道挂了。当然可以通过ngx_http_healthcheck_module 第三方模块加强。</p>
-</li>
-</ol>
-<p>参考资料<br />
-<a href="https://www.quora.com/Which-software-load-balancer-is-better-HAProxy-or-nginx">Which software load balancer is better: HAProxy or nginx?Which software load balancer is better: HAProxy or nginx?</a></p>
+              <p>由于CentOS 6.7通过yum方式按照的ImageMagick版本是6.7。但是最新版本 6.9.3-7。在压缩相同源文件，出来的相同尺寸的图片的文件小50%以上，效果明显，值得自己的编译源代码安装。通过google 找到解决办法。google 人类的希望。
+<a href="https://www.vultr.com/docs/install-imagemagick-on-centos-6">参考教程链接</a></p>
+<h1>具体过程</h1>
+<h2>删除系统原来的ImageMagick</h2>
+<blockquote>
+<p>yum remove ImageMagick</p>
+</blockquote>
+<h2>准备好编译环境</h2>
+<blockquote>
+<p>yum -y groupinstall 'Development Tools'yum -y groupinstall 'Development Tools'</p>
+<p>yum -y install bzip2-devel freetype-devel libjpeg-devel libpng-devel libtiff-devel giflib-devel zlib-devel ghostscript-devel djvulibre-devel libwmf-devel jasper-devel libtool-ltdl-devel libX11-devel libXext-devel libXt-devel lcms-devel libxml2-devel librsvg2-devel OpenEXR-devel yum -y install bzip2-devel freetype-devel libjpeg-devel libpng-devel libtiff-devel giflib-devel zlib-devel ghostscript-devel djvulibre-devel libwmf-devel jasper-devel libtool-ltdl-devel libX11-devel libXext-devel libXt-devel lcms-devel libxml2-devel librsvg2-devel OpenEXR-devel</p>
+</blockquote>
+<p>因为我的系统安装了php，没像教程中加入了 php-devel.否则yum检测依赖关系时报错,第二条命令执行失败.教程作者好积极推广PHP</p>
+<h2>下载ImageMagick源代码 解压</h2>
+<blockquote>
+<p>wget http://www.imagemagick.org/download/ImageMagick.tar.gz</p>
+<p>tar xvzf ImageMagick.tar.gz</p>
+<p>cd ImageMagick*</p>
+</blockquote>
+<h2>编译安装</h2>
+<blockquote>
+<p>./configure</p>
+<p>make
+make install</p>
+</blockquote>
+<p>如果是多核CPU的,make可以加参数,像四核 make -j 4, 二核是 make -j 2, 类推. 没事时,多看man,有收获.</p>
+<h2>版本查看</h2>
+<blockquote>
+<p>convert --version</p>
+</blockquote>
+<p>对比原版本号 确认一下</p>
+<h2>验证</h2>
+<blockquote>
+<p>convert x.jpg   x.png</p>
+</blockquote>
+<p>查看图片是否正常转换.</p>
             </div><!-- /.entry-content -->
             <div class="comments">
               <h3>Comments</h3>
               <div id="disqus_thread"></div>
               <script type="text/javascript">
-                var disqus_identifier = "lvs-nginx-haproxy-dui-bi.html";
+                var disqus_identifier = "bian-yi-an-zhuang-imagemagick.html";
                 (function() {
                 var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
                 dsq.src = 'https://httpluojiyin1987githubio.disqus.com/embed.js';
