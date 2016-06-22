@@ -2,7 +2,7 @@
 <html lang="zh-cn">
 <head>
 
-        <title>记录自己的想法</title>
+        <title>解决同时有两个公网IP的路由设置问题</title>
         <meta charset="utf-8" />
 
 
@@ -41,42 +41,62 @@
               </ul>
             </div>
 
-<section id="content">
-<h2>Articles in the 文章类别 category</h2>
-
+<section id="content" class="body">
 
    <div class="row">
-
-
         <div class="eleven columns">
-                 <ol id="post-list">
-                        <li><article class="hentry">
-                                <header> <h2 class="entry-title"><a href="/wen-zhang-biao-ti.html" rel="bookmark" title="Permalink to 文章标题">文章标题</a></h2> </header>
-                                <footer class="post-info">
-                                    <abbr class="published" title="2016-05-25T00:00:00+02:00"> 三 25 五月 2016 </abbr>
-                                    <address class="vcard author">By 
-                                    <a class="url fn" href="/author/luojiyin.html"> luojiyin</a>
-                                    </address>
-                                </footer><!-- /.post-info -->
-                                <div class="entry-content"> <p>这是内容</p> </div><!-- /.entry-content -->
-
-                                <div class="medium primary btn"><a href="/wen-zhang-biao-ti.html" rel="bookmark" title="Permalink to 文章标题">Read more <i class="icon-arrow-right"></i></a></div>
 
 
+            <header>
+              <h2 class="entry-title">
+                <a href="/jie-jue-tong-shi-you-liang-ge-gong-wang-ipde-lu-you-she-zhi-wen-ti.html" rel="bookmark"
+                   title="Permalink to 解决同时有两个公网IP的路由设置问题">解决同时有两个公网IP的路由设置问题</a></h2>
+           
+            </header>
+            <footer class="post-info">
+              <abbr class="published" title="2016-06-22T00:00:00+02:00">
+                三 22 六月 2016
+              </abbr>
+              <address class="vcard author">By 
+                <a class="url fn" href="/author/luojiyin.html"> luojiyin</a>
+              </address>
+            </footer><!-- /.post-info -->
+            <div class="entry-content">
+              <h2>背景</h2>
+<p>不想改网站的域名解析对应的IP A,毕竟在国内DNS解析生效的时间比较漫长,不靠谱.就在另一个CentOS 6.7虚拟机上再加个虚拟网卡,设好公网IP地址,子网掩码,网关. 这两个公网IP都可以ping通.在网络浏览器输入网址,居然没什么反应,空白一片.</p>
+<h2>解决</h2>
+<p>在服务器上使用tcpdump分析流量.</p>
+<p>先监控 公网IP A 与我的出口IP间的流量
+再监控 公网IP B 与我的出口IP间的流量
+发现 有我出口IP到IP A的流量,没IP A 到我的出口IP的流量,有IP B 到我出口IP的应答.
+没有原路来 原路回, 那就应该是路由规则的问题
+由于是机器托管在机房,要设置对应的网关</p>
+<blockquote>
+<p>ip route add default via 网关 dev eth2 table 100 src IP A</p>
+<p>ip route add default via 网关 dev eth0 table 200 src IP B</p>
+<p>ip rule add from IP A table 100</p>
+<p>ip rule add from IP B table 200</p>
+</blockquote>
+<p>重启系统这命令会失效<br />
+所以在开机启动脚本里  /etc/rc.d/rc.local 加入四条命令.这是Redhat系</p>
+<p>重启network服务,也会失效, 加入到网络启动脚本/etc/rc.d/init.d/network.这是Redhat系</p>
+            </div><!-- /.entry-content -->
+            <div class="comments">
+              <h3>Comments</h3>
+              <div id="disqus_thread"></div>
+              <script type="text/javascript">
+                var disqus_identifier = "jie-jue-tong-shi-you-liang-ge-gong-wang-ipde-lu-you-she-zhi-wen-ti.html";
+                (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = 'https://httpluojiyin1987githubio.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+              </script>
+            </div>
 
-                                <div class="row tag-row">
-                                        <span>Tagged as : </span>
-                                            <a class="danger label" href="/tag/biao-qian-1.html">标签1</a>
-                                            <a class="danger label" href="/tag/biao-qian-2.html">标签2</a>
-                                </div>
-
-
-
-                        </article></li>
-                </ol><!-- /#posts-list -->
 
         </div><!-- /.eleven.columns -->
-        
+
 <div class="three columns">
 
 <h4>Pages</h4>
@@ -111,10 +131,8 @@
 
 </div> </div><!-- /.row -->
 
-<p class="paginator">
-    Page 1 / 1
-</p>
-</section><!-- /#content -->
+
+</section>
 
        </div><!-- /.row -->
     </div><!-- /.container -->
